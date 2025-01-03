@@ -1,0 +1,8 @@
+.form-label {
+    @apply block mb-1 text-sm font-medium;
+}
+
+.form-field {
+    @apply w-full bg-cyan-dark rounded-full px-4 py-3 text-white font-light;
+    box-shadow: inset -1px -2px 5px rgba(0, 0, 0, .25);
+}

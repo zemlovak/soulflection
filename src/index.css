@@ -1,0 +1,231 @@
+
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  @font-face {
+    font-family: "Rubik", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    src: url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+  }
+
+  @font-face {
+    font-family: "SanBrainy";
+    src: url("./assets/fonts/SanBrainy.otf") format("opentype");
+  }
+
+  @font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("../webfonts/fa-solid-900.woff2");
+  }
+
+  h1 {
+    @apply font-sanbrainy;
+    font-size: 160px;
+  }
+
+  h2 {
+    @apply text-7xl font-sanbrainy;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+}
+
+#root {
+  @apply sm:px-10 mx-4;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: url("./assets/images/paper-texture-bg.jpg") no-repeat center;
+  background-size: cover;
+}
+
+.cta-btn {
+  @apply bg-cyan-ultradark text-white font-semibold py-3 px-5 border border-transparent rounded-full shadow-md hover:border-cyan-light hover:bg-transparent hover:text-cyan-dark;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn {
+  @apply font-medium py-1.5 px-4 border-transparent rounded-full
+}
+
+.footnote {
+  font-size: 11px;
+  @apply text-justify break-words;
+}
+
+.return-home {
+  @apply flex flex-row justify-center w-full mt-10;
+}
+
+/*
+
+
+#root {
+  min-width: 320px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+a {
+  font-weight: 500;
+  color: var(--cyan-light);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--cyan-light);
+}
+
+
+
+h1 {
+  font-family: var(--font-secondary);
+  font-size: 10rem;
+  margin: 0 auto;
+}
+
+h2 {
+  font-family: var(--font-secondary);
+  font-size: 4rem;  
+  margin: 0 auto;
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
+ul, li {
+  list-style: none;
+}
+
+header {
+  display: flex;
+}
+
+button {
+  padding: 1.2em 3.2em;
+  border-radius: 3em;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  margin: .75em 0 .45em 0;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: var(--cyan-light);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+
+.footnote {
+  font-size: x-small;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-field{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.form-field > label, input[type='checkbox'] {
+  align-self: flex-start;
+  margin-top: 0.9em;
+}
+
+.form-field > label:not(:last-child) {
+  font-size: 0.8em;
+  margin: 0.65em 0 0.25em 0;
+  
+}
+
+.form-field > input:not([type='checkbox']) {
+  padding: 1.2em 3.2em;
+  border: none;
+  border-radius: 3em;
+  background-color: var(--cyan-dark);
+  box-shadow: inset -1px -2px 5px;
+}
+
+.consent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+input#consent {
+  border-radius: 50%;
+}
+
+label.footnote {
+  margin-left: 0.5rem;
+  width:100%;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: var(--cyan-light);
+    font-weight: 800;
+  }
+  button {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 179, 179, .5) 
+  }
+}
+
+.retun-home-panel {
+  width: 100%;
+  background-color: red;
+}
+
+ */

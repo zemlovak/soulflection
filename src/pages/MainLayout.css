@@ -1,0 +1,12 @@
+.search-box {
+    position: relative;
+}
+
+.search-box::before {
+    position: absolute;
+    content: url('src/assets/icons/zoom.svg');
+    top: 12.5%;
+    left: 5px;
+    @apply text-white;
+
+}

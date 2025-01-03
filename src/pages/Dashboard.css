@@ -1,0 +1,16 @@
+
+.user-greeting::before {
+  content: url("src/assets/icons/sunset-2.svg");
+  position: absolute;
+  top: 3px;
+  left: -30px;
+}
+
+.bookmark::after {
+  font: var(--fa-font-solid);
+  font-size: x-large;
+  content: "\f02e";
+  position: absolute;
+  top: -1%;
+  left: 5%;
+}
