@@ -49,16 +49,10 @@
   @apply sm:px-10 mx-4;
   max-width: 1280px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   background: url("./assets/images/paper-texture-bg.jpg") no-repeat center;

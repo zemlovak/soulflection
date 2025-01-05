@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +11,6 @@ import { Timer } from "../components/Timer";
 import "./JournalThoughts.css";
 
 export const JournalThoughts = () => {
-
   return (
     <>
       <h2 className="my-4 text-white">Share your thoughts ...</h2>
@@ -34,7 +33,7 @@ export const JournalThoughts = () => {
             flow.
           </li>
         </ul>
-        <div className="relative">
+        <div className="w-full relative">
           <textarea
             name="automatic-writing"
             id="automatic-writing"
@@ -43,7 +42,7 @@ export const JournalThoughts = () => {
             placeholder="What's the very first thing that pops into your mind?"
             className="px-4 py-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
-          <Timer/>
+          <Timer />
         </div>
         <div className="flex flex-row justify-between items-center">
           <button type="reset" className="mr-2 text-white text-sm font-medium">

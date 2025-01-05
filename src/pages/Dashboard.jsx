@@ -1,20 +1,65 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
   faCalendar,
+  faCloudMoon,
+  faCloudSun,
   faLungs,
+  faMoon,
   faPenToSquare,
   faPlus,
+  faSun,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Dashboard.css";
 
 export const Dashboard = () => {
+  
+  let user = useParams().user;
+  user = user.charAt(0).toUpperCase() + user.slice(1);
+
+  const handleTimeOfDay = () => {
+    const date = new Date();
+    let hours = date.getHours();
+
+    if (hours >= 5 && hours < 12) {
+      return (
+        <>
+          <FontAwesomeIcon icon={faCloudSun} className="mr-2" />
+          Good Morning, {user}
+        </>
+      );
+    } else if (hours >= 12 && hours < 18) {
+      return (
+        <>
+          <FontAwesomeIcon icon={faSun} className="mr-2" />
+          Good Afternoon, {user}
+        </>
+      );
+    } else if (hours >= 18 && hours < 22) {
+      return (
+        <>
+          <FontAwesomeIcon icon={faCloudMoon} className="mr-2" />
+          Good Evening, {user}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <FontAwesomeIcon icon={faMoon} className="mr-2" />
+          Good Night, {user}
+        </>
+      );
+    }
+  };
+
   return (
     <>
-      <h4 className="user-greeting relative mt-8 mb-8">Good Morning, User</h4>
+      <h4 className="user-greeting relative mt-8 mb-8 text-center">
+        {handleTimeOfDay()}
+      </h4>
       <div className="px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl grid gap-4 lg:grid-cols-4 lg:grid-rows-2 sm:grid-cols-2 sm:grid-rows-3 text-white">
         <div className="flex justify-center items-center bg-transparent rounded-xl">
           <img
@@ -60,41 +105,47 @@ export const Dashboard = () => {
               <hr />
               <div>
                 <FontAwesomeIcon icon={faCalendar} />
-                <time datetime="2025-01-4T20:00">
+                <time dateTime="2025-01-4T20:00">
                   {" "}
                   January 4th, 2025 at 8:00 PM
                 </time>
-                <p class="font-bold font-lg mb-2">Yoga before bed</p>
+                <p className="font-bold font-lg mb-2">Yoga before bed</p>
               </div>
             </li>
             <hr />
             <li>
               <div>
                 <FontAwesomeIcon icon={faCalendar} />
-                <time datetime="2025-01-10T7:00">
+                <time dateTime="2025-01-10T7:00">
                   {" "}
                   January 10th, 2025 at 7:00 AM
                 </time>
-                <p class="font-bold font-lg mb-2">Morning meditation</p>
+                <p className="font-bold font-lg mb-2">Morning meditation</p>
               </div>
             </li>
             <hr />
             <li>
               <div>
                 <FontAwesomeIcon icon={faCalendar} />
-                <time datetime="2025-01-4T08:00">
+                <time dateTime="2025-01-4T08:00">
                   {" "}
                   January 12th, 2025 at 8:00 AM
                 </time>
-                <p class="font-bold font-lg mb-2">Wake-up pranayama</p>
+                <p className="font-bold font-lg mb-2">Wake-up pranayama</p>
               </div>
             </li>
             <hr />
           </ol>
         </div>
         <div className=" bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8">
-          <div className="w-full h-full flex flex-col justify-center items-center"><Link><FontAwesomeIcon icon={faLungs} className="text-9xl  hover:animate-pulse transition-all ease-in-out"/></Link>
-          <p className="text-lg mt-8">Start breathing now</p>
+          <div className="w-full h-full flex flex-col justify-center items-center">
+            <Link>
+              <FontAwesomeIcon
+                icon={faLungs}
+                className="text-9xl  hover:animate-pulse transition-all ease-in-out"
+              />
+            </Link>
+            <p className="text-lg mt-8">Start breathing now</p>
           </div>
         </div>
         <div className="lg:col-span-2 bg-transparent rounded-xl px-4 pt-16 sm:pt-20">

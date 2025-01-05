@@ -105,9 +105,9 @@ export const Timer = () => {
   }; */
 
   return (
-    <button
+    <div
       onClick={(e) => e.preventDefault()}
-      className="absolute bottom-4 left-2 btn h-8 bg-cyan-light text-white flex items-center"
+      className="absolute bottom-4 left-2 btn cursor-pointer h-8 bg-cyan-light text-white flex items-center"
     >
       <div className="inline-flex h-full">
         <FontAwesomeIcon
@@ -126,7 +126,7 @@ export const Timer = () => {
       >
         <input
           rows={10}
-          className="inline-flex align-text-top h-8 overflow-hidden resize-none max-w-16 px-2 py-2 bg-cyan-light placeholder:text-white"
+          className="inline-flex align-text-top h-8 resize-none max-w-20 px-2 py-2 bg-cyan-light placeholder:text-white"
           type="text"
           value={inputValue}
           placeholder="HH:MM:SS"
@@ -137,7 +137,7 @@ export const Timer = () => {
         <FontAwesomeIcon onClick={stopTimer} className="ml-2" icon={faPause} />{" "}
         <FontAwesomeIcon onClick={resetTimer} className="ml-2" icon={faRotateBack} />
       </div>
-    </button>
+    </div>
   );
 };
 

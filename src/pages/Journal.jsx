@@ -19,7 +19,7 @@ export const JournalPage = () => {
           Thoughts
         </NavLink>
         <NavLink
-          to="/journal/self-reflection"
+          to="/:user/journal/self-reflection"
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -29,7 +29,7 @@ export const JournalPage = () => {
           Self-reflection
         </NavLink>
         <NavLink
-          to="/journal/emotional-processing"
+          to="/:user/journal/emotional-processing"
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -39,7 +39,7 @@ export const JournalPage = () => {
           Emotional processing
         </NavLink>
         <NavLink
-          to="/journal/goals"
+          to="/:user/journal/goals"
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -49,7 +49,7 @@ export const JournalPage = () => {
           Goals
         </NavLink>
         <NavLink
-          to="/journal/grounding"
+          to="/:user/journal/grounding"
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""

@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/pages/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@fortawesome/fontawesome-free/**/*.js",
   ],
   theme: {

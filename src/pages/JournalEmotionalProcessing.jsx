@@ -1,28 +1,32 @@
 import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMasksTheater,
+  faThunderstorm,
+} from "@fortawesome/free-solid-svg-icons";
 
-import "./JournalThoughts.css";
+import "../pages/JournalThoughts.css";
+import { faSpeakap } from "@fortawesome/free-brands-svg-icons";
 
-export const JournalSelfReflection = () => {
+export const JournalEmotionalProcessing = () => {
   return (
     <>
-      <h2 className="my-4 text-white">Time to self-reflect ...</h2>
+      <h2 className="my-4 text-white">Understand what you feel ...</h2>
       <form className="text-white">
         <p className="w-3/5 text-wrap">
-          Here are some journaling prompts to help you gain insights about your
-          personal experiences, behaviors, and beliefs.
+          Identify, understand and work through your emotions with these simple
+          journaling prompts.
         </p>
         <ul className="text-xs list-decimal mt-2 mb-4 leading-5">
           <li>
-            <FontAwesomeIcon icon={faBookOpen} className="mr-2" />
-            Read each prompt and allow yourself a few moments to think before
-            writing.
+            <FontAwesomeIcon icon={faMasksTheater} className="mr-2" />
+            First, name the emotion you're feeling.
           </li>
           <li>
-            <FontAwesomeIcon icon={faHeart} className="mr-2" />
-            Aim for honest introspection—this is a conversation with yourself.
+            <FontAwesomeIcon icon={faThunderstorm} className="mr-2" />
+            Explore its origins, triggers, and any physical sensations
+            associated with it.
           </li>
         </ul>
         <div className="grid gap-2 lg:grid-cols-2 sm:grid-cols-1">
@@ -31,7 +35,7 @@ export const JournalSelfReflection = () => {
             id="prompt-1"
             rows={3}
             cols={45}
-            placeholder="What have I learned about myself today or this week?"
+            placeholder="What emotion is most present for me right now? Why do I think I'm feeling this way?"
             className="px-4 py-4  mx-4 mb-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
           <textarea
@@ -39,7 +43,7 @@ export const JournalSelfReflection = () => {
             id="prompt-2"
             rows={3}
             cols={45}
-            placeholder="In which area of my life do I feel I've grown the most recently, and what sparked that growth?"
+            placeholder="How do I notice it in my body, e.g. tension, warmth?"
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
           <textarea
@@ -47,7 +51,7 @@ export const JournalSelfReflection = () => {
             id="prompt-3"
             rows={3}
             cols={45}
-            placeholder="What recurring thought, behavior, or situation keeps showing up for me, and what might it be teaching me?"
+            placeholder="What event, thought, or memory might be triggering this emotion? How does that awareness help me understand it better?"
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
           <textarea
@@ -55,7 +59,7 @@ export const JournalSelfReflection = () => {
             id="prompt-4"
             rows={3}
             cols={45}
-            placeholder="When did I last feel proud? When did I feel disappointed? What can I learn from these moments?"
+            placeholder="If I imagine this emotion as a shape or color, what would it look like and why?"
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
           <textarea
@@ -63,7 +67,7 @@ export const JournalSelfReflection = () => {
             id="prompt-5"
             rows={3}
             cols={45}
-            placeholder="Where in my life do I need to show myself more acceptance, and where do I feel motivated to make a change?"
+            placeholder="What healthy steps can I take—right now or in the future—to cope with or relieve this emotion?"
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
           <textarea
@@ -71,7 +75,7 @@ export const JournalSelfReflection = () => {
             id="prompt-6"
             rows={3}
             cols={45}
-            placeholder="Looking ahead, what is one goal or quality I want to focus on developing, and why does it matter to me?"
+            placeholder="How can working through this emotion help me grow, learn, or change my perspective moving forward?"
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
           ></textarea>
         </div>
@@ -88,4 +92,4 @@ export const JournalSelfReflection = () => {
   );
 };
 
-export default JournalSelfReflection;
+export default JournalEmotionalProcessing;

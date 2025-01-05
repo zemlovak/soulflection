@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from "react-router";
+
+import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
 
 export const SignUpSuccess = () => {
   return (
-    <>
-      <div className="return-home">
-        <Link to="/home">
-          <img src="src\assets\icons\home.svg" alt="home icon" />
-        </Link>
-      </div>
+    <>      
+      <ReturnHomeBtn />
       <div className="text-center w-4/5">
         <h2 className="mt-8">Account created successfully.</h2>
         <h4 className="mt-8 mb-6">
