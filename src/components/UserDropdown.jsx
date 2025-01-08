@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,8 +6,10 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 export const UserDropdown = () => {
+
   const [isOpen, setIsOpen] = useState(false);
-  const { logout } = useAuth();
+  const { logout, userName } = useAuth();
+
   return (
     <div className="relative inline-block text-left">
       <div
@@ -28,7 +29,13 @@ export const UserDropdown = () => {
         >
           <div className="py-1">
             <a
-              href="/:user/settings"
+              href={`/${userName}`} onClick={console.log(`username: ${userName}`)}
+              className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-light hover:bg-opacity-15"
+            >
+              Dashboard
+            </a>
+            <a
+              href={`/:user/settings`}
               className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-light hover:bg-opacity-15"
             >
               Settings

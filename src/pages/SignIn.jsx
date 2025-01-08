@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../context/AuthContext";
+
+import { Link } from "react-router";
 
 import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
 
@@ -28,7 +30,7 @@ export const SignIn = () => {
 
       console.log("Login successful!", authData);
 
-      const userRoute = authData.user.user_metadata?.name || email.split("@")[0];
+      /* const userRoute = authData.user.user_metadata?.name || email.split("@")[0]; */
       const { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("name")
@@ -39,8 +41,8 @@ export const SignIn = () => {
         throw profileError;
       }
       const userName = profileData.name;
-      login(userName); // Update context with user data
-      navigate(`/${userRoute}`); // Navigate to the dashboard
+      login(userName); 
+      navigate(`/${userName}`); 
     } catch (err) {
       console.error("Error during login:", err.message);
       setError("Invalid email or password. Please try again.");
@@ -86,8 +88,12 @@ export const SignIn = () => {
           ></input>
         </div>
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-        <button className="cta-btn mt-8 mb-20">SIGN IN</button>
+        <button className="cta-btn mt-8 mb-2">SIGN IN</button>
       </form>
+      <div className="footnote">
+        <span >Don't have an account? </span>
+        <Link to="/sign-up" className="text-cyan-light font-bold transition ease-in-out duration-800 transform hover:underline ">Sign up</Link>
+      </div>
     </>
   );
 };

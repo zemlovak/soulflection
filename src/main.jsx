@@ -20,6 +20,7 @@ import JournalGoals from "./pages/JournalGoals";
 import CenteredLayout from "./pages/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
 import LogOutSuccess from "./pages/LogOutSuccess";
+import SettingsPage from "./pages/SettingsPage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -38,6 +39,7 @@ createRoot(document.getElementById("root")).render(
 
         <Route path="/:user" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="/:user/settings" element={<SettingsPage/>}/>
 
           <Route path="/:user/journal" element={<JournalPage />}>
             <Route index element={<JournalThoughts />} />

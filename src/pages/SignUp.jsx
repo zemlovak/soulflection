@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Link } from "react-router";
+
 import { supabase } from "../../supabaseClient";
 
 import "./SignUp.css";
@@ -164,7 +166,7 @@ export const SignUp = () => {
         </div>
 
         <button
-          className="cta-btn mt-8 mb-20 disabled:cursor-not-allowed"
+          className="cta-btn mt-8 mb-2 disabled:cursor-not-allowed"
           type="submit"
           disabled={
             !name ||
@@ -178,6 +180,10 @@ export const SignUp = () => {
           CREATE ACCOUNT
         </button>
       </form>
+      <div className="footnote">
+        <span >Already have an account? </span>
+        <Link to="/sign-in" className="text-cyan-light font-bold transition ease-in-out duration-800 transform hover:underline ">Sign in</Link>
+      </div>
     </>
   );
 };
