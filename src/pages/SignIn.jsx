@@ -16,7 +16,7 @@ export const SignIn = () => {
     e.preventDefault();
 
     try {
-      const { data: user, error: authError } =
+      const { data: authData, error: authError } =
         await supabase.auth.signInWithPassword({
           email,
           password,
@@ -26,11 +26,21 @@ export const SignIn = () => {
         throw authError;
       }
 
-      console.log("Login successful!", user);
+      console.log("Login successful!", authData);
 
-      const userName = user.user.user_metadata?.name || email.split("@")[0]; // Use name if available
+      const userRoute = authData.user.user_metadata?.name || email.split("@")[0];
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .select("name")
+        .eq("id", authData.user.id)
+        .single();
+
+      if (profileError) {
+        throw profileError;
+      }
+      const userName = profileData.name;
       login(userName); // Update context with user data
-      navigate(`/${userName}`); // Navigate to the dashboard
+      navigate(`/${userRoute}`); // Navigate to the dashboard
     } catch (err) {
       console.error("Error during login:", err.message);
       setError("Invalid email or password. Please try again.");

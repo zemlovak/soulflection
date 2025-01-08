@@ -16,7 +16,6 @@ export const Dashboard = () => {
   return (
     <>
       <UserGreeting />
-
       <div className="px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl grid gap-4 lg:grid-cols-4 lg:grid-rows-2 sm:grid-cols-2 sm:grid-rows-3 text-white">
         <div className="flex justify-center items-center bg-transparent rounded-xl">
           <img

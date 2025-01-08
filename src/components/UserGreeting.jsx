@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,8 +9,7 @@ import {
   } from "@fortawesome/free-solid-svg-icons";
 
 export const UserGreeting = () => {
-  let user = useParams().user;
-  user = user.charAt(0).toUpperCase() + user.slice(1);
+  const { userName } = useAuth();
 
   const handleTimeOfDay = () => {
     const date = new Date();
@@ -20,28 +19,28 @@ export const UserGreeting = () => {
       return (
         <>
           <FontAwesomeIcon icon={faCloudSun} className="mr-2" />
-          Good Morning, {user}
+          Good Morning, {userName}
         </>
       );
     } else if (hours >= 12 && hours < 18) {
       return (
         <>
           <FontAwesomeIcon icon={faSun} className="mr-2" />
-          Good Afternoon, {user}
+          Good Afternoon, {userName}
         </>
       );
     } else if (hours >= 18 && hours < 22) {
       return (
         <>
           <FontAwesomeIcon icon={faCloudMoon} className="mr-2" />
-          Good Evening, {user}
+          Good Evening, {userName}
         </>
       );
     } else {
       return (
         <>
           <FontAwesomeIcon icon={faMoon} className="mr-2" />
-          Good Night, {user}
+          Good Night, {userName}
         </>
       );
     }
