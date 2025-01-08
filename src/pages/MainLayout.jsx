@@ -7,15 +7,13 @@ import { Navbar } from "../components/Navbar";
 import { SearchBox } from "../components/SearchBox";
 
 import "./MainLayout.css";
+import UserDropdown from "../components/UserDropdown";
 
 export const MainLayout = () => {
   return (
     <>
       <header className="flex flex-row justify-between items-center mt-8 sm:mt-10 w-full">
-       {/*  <Link to={"/:user"}>
-          <FontAwesomeIcon icon={faUserCircle} className="text-xl" />
-        </Link> */}
-        
+        <UserDropdown/>
         <Navbar />
         <SearchBox />
       </header>

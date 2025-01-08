@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
 
 export const SignUpSuccess = () => {

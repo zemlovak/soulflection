@@ -1,86 +1,47 @@
-import { useState, useEffect } from "react";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useState } from "react";
+import { NavLink } from "react-router";
+import { useAuth } from "../context/AuthContext";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
 
 export const UserDropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { logout } = useAuth();
   return (
-    <>
-      <Menu as="div" className="relative inline-block text-left">
-        <div>
-          <FontAwesomeIcon icon={faUserCircle} className="text-xl" />
-        </div>
+    <div className="relative inline-block text-left">
+      <div
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex items-center focus:outline-none cursor-pointer"
+      >
+        <FontAwesomeIcon
+          icon={faUserCircle}
+          className="text-2xl text-gray-600"
+        />
+      </div>
 
-        <MenuItems
-          transition
-          className="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+      {isOpen && (
+        <div
+          className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5"
+          onClick={() => setIsOpen(false)} // Close on click
         >
           <div className="py-1">
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Edit
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Duplicate
-              </a>
-            </MenuItem>
+            <a
+              href="/:user/settings"
+              className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-light hover:bg-opacity-15"
+            >
+              Settings
+            </a>
+            <a onClick={logout}
+              className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-light hover:bg-opacity-15"
+            >
+              Logout
+            </a>
           </div>
-          <div className="py-1">
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Archive
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Move
-              </a>
-            </MenuItem>
-          </div>
-          <div className="py-1">
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Share
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Add to favorites
-              </a>
-            </MenuItem>
-          </div>
-          <div className="py-1">
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                Delete
-              </a>
-            </MenuItem>
-          </div>
-        </MenuItems>
-      </Menu>
-      ;
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 

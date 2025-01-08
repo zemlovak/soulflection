@@ -19,11 +19,13 @@ import JournalEmotionalProcessing from "./pages/JournalEmotionalProcessing";
 import JournalGoals from "./pages/JournalGoals";
 import CenteredLayout from "./pages/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
+import LogOutSuccess from "./pages/LogOutSuccess";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
+    
     <BrowserRouter>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<CenteredLayout />}>
           <Route index element={<LandingPage />} />
@@ -31,6 +33,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-up/success" element={<SignUpSuccess />} />
           <Route path="/sign-up/error" element={<SignUpError />} />
+          <Route path="/logout" element={<LogOutSuccess />} />
         </Route>
 
         <Route path="/:user" element={<MainLayout />}>
@@ -51,7 +54,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="yoga" /* element={<YogaPage />} */ />
         </Route>
       </Routes>
-    </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>    
   </StrictMode>
 );
