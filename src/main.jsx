@@ -18,9 +18,11 @@ import JournalSelfReflection from "./pages/JournalSelfReflection";
 import JournalEmotionalProcessing from "./pages/JournalEmotionalProcessing";
 import JournalGoals from "./pages/JournalGoals";
 import CenteredLayout from "./pages/CenteredLayout";
+import { AuthProvider } from "./context/AuthContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<CenteredLayout />}>
@@ -50,5 +52,6 @@ createRoot(document.getElementById("root")).render(
         </Route>
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   </StrictMode>
 );

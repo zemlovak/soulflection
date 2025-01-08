@@ -1,65 +1,22 @@
-import React from "react";
-import { Link, useParams } from "react-router";
+import { Link } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
   faCalendar,
-  faCloudMoon,
-  faCloudSun,
   faLungs,
-  faMoon,
   faPenToSquare,
   faPlus,
-  faSun,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Dashboard.css";
+import UserGreeting from "../components/UserGreeting";
 
-export const Dashboard = () => {
-  
-  let user = useParams().user;
-  user = user.charAt(0).toUpperCase() + user.slice(1);
-
-  const handleTimeOfDay = () => {
-    const date = new Date();
-    let hours = date.getHours();
-
-    if (hours >= 5 && hours < 12) {
-      return (
-        <>
-          <FontAwesomeIcon icon={faCloudSun} className="mr-2" />
-          Good Morning, {user}
-        </>
-      );
-    } else if (hours >= 12 && hours < 18) {
-      return (
-        <>
-          <FontAwesomeIcon icon={faSun} className="mr-2" />
-          Good Afternoon, {user}
-        </>
-      );
-    } else if (hours >= 18 && hours < 22) {
-      return (
-        <>
-          <FontAwesomeIcon icon={faCloudMoon} className="mr-2" />
-          Good Evening, {user}
-        </>
-      );
-    } else {
-      return (
-        <>
-          <FontAwesomeIcon icon={faMoon} className="mr-2" />
-          Good Night, {user}
-        </>
-      );
-    }
-  };
+export const Dashboard = () => { 
 
   return (
     <>
-      <h4 className="user-greeting relative mt-8 mb-8 text-center">
-        {handleTimeOfDay()}
-      </h4>
+      <UserGreeting />
+
       <div className="px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl grid gap-4 lg:grid-cols-4 lg:grid-rows-2 sm:grid-cols-2 sm:grid-rows-3 text-white">
         <div className="flex justify-center items-center bg-transparent rounded-xl">
           <img
@@ -154,6 +111,8 @@ export const Dashboard = () => {
           </p>
         </div>
       </div>
+
+      
     </>
   );
 };

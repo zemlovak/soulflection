@@ -12,9 +12,10 @@ export const MainLayout = () => {
   return (
     <>
       <header className="flex flex-row justify-between items-center mt-8 sm:mt-10 w-full">
-        <Link to={"/:user"}>
+       {/*  <Link to={"/:user"}>
           <FontAwesomeIcon icon={faUserCircle} className="text-xl" />
-        </Link>
+        </Link> */}
+        
         <Navbar />
         <SearchBox />
       </header>
