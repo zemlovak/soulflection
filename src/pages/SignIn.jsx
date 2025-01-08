@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { supabase } from "../../supabaseClient";
 import { useAuth } from "../context/AuthContext";
 
 import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
@@ -15,14 +14,25 @@ export const SignIn = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Login successful!");
-      const userName = userCredential.user.displayName || email.split("@")[0];
-      login(userName);
-      navigate(`/${userName}`);
 
+    try {
+      const { data: user, error: authError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+      if (authError) {
+        throw authError;
+      }
+
+      console.log("Login successful!", user);
+
+      const userName = user.user.user_metadata?.name || email.split("@")[0]; // Use name if available
+      login(userName); // Update context with user data
+      navigate(`/${userName}`); // Navigate to the dashboard
     } catch (err) {
+      console.error("Error during login:", err.message);
       setError("Invalid email or password. Please try again.");
     }
   };
@@ -32,10 +42,13 @@ export const SignIn = () => {
       <ReturnHomeBtn />
       <h2 className="mt-10 mb-4">Sign in to your account</h2>
       <form
-      className="w-full max-w-xs flex flex-col justify-center items-center"
-      onSubmit={handleLogin}>
+        className="w-full max-w-xs flex flex-col justify-center items-center"
+        onSubmit={handleLogin}
+      >
         <div className="w-full">
-          <label htmlFor="email" className="form-label mt-8">e-mail</label>
+          <label htmlFor="email" className="form-label mt-8">
+            e-mail
+          </label>
           <input
             className="form-field"
             type="email"
@@ -48,7 +61,9 @@ export const SignIn = () => {
           ></input>
         </div>
         <div className="w-full">
-          <label htmlFor="password" className="form-label mt-2">password</label>
+          <label htmlFor="password" className="form-label mt-2">
+            password
+          </label>
           <input
             className="form-field"
             type="password"

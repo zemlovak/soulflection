@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { supabase } from "../../supabaseClient";
 
 import "./SignUp.css";
 import ReturnHomeBtn from "../components/ReturnHomeBtn";
@@ -44,15 +40,35 @@ export const SignUp = () => {
       return;
     }
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      await sendEmailVerification(userCredential.user);
+      const { data: user, error: authError } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
+
+      if (authError) {
+        throw authError;
+      }
+
+      const { error: dbError } = await supabase.from("profiles").insert([
+        {
+          id: user.user.id,
+          name,
+          surname,
+          email,
+          created_at: new Date(),
+        },
+      ]);
+
+      if (dbError) {
+        throw dbError;
+      }
+
       navigate("/sign-up/success");
     } catch (err) {
-      setError(err.message);
+      console.error("Error during sign-up:", err.message);
+      setError(
+        "An error occurred while creating your account. Please try again."
+      );
       navigate("/sign-up/error");
     }
   };
@@ -147,7 +163,20 @@ export const SignUp = () => {
           </label>
         </div>
 
-        <button className="cta-btn mt-8 mb-20" type="submit">CREATE ACCOUNT</button>
+        <button
+          className="cta-btn mt-8 mb-20 disabled:cursor-not-allowed"
+          type="submit"
+          disabled={
+            !name ||
+            !surname ||
+            !email ||
+            !password ||
+            !confirmPassword ||
+            !consent
+          }
+        >
+          CREATE ACCOUNT
+        </button>
       </form>
     </>
   );
