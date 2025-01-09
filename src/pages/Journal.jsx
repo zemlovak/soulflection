@@ -1,8 +1,10 @@
 import React from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export const JournalPage = () => {
   const location = useLocation();
+  const { userName } = useAuth();
 
   return (
     <div className="min-w-96 px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl">
@@ -19,7 +21,7 @@ export const JournalPage = () => {
           Thoughts
         </NavLink>
         <NavLink
-          to="/:user/journal/self-reflection"
+          to={`/${userName}/journal/self-reflection`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -29,7 +31,7 @@ export const JournalPage = () => {
           Self-reflection
         </NavLink>
         <NavLink
-          to="/:user/journal/emotional-processing"
+          to={`/${userName}/journal/emotional-processing`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -39,7 +41,7 @@ export const JournalPage = () => {
           Emotional processing
         </NavLink>
         <NavLink
-          to="/:user/journal/goals"
+          to={`/${userName}/journal/goals`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -49,7 +51,7 @@ export const JournalPage = () => {
           Goals
         </NavLink>
         <NavLink
-          to="/:user/journal/grounding"
+          to={`/${userName}/journal/grounding`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
