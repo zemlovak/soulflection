@@ -35,7 +35,7 @@ export const UserDropdown = () => {
               Dashboard
             </a>
             <a
-              href={`/:user/settings`}
+              href={`/${userName}/settings`}
               className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-light hover:bg-opacity-15"
             >
               Settings
