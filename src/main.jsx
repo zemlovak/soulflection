@@ -21,42 +21,47 @@ import CenteredLayout from "./pages/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
 import LogOutSuccess from "./pages/LogOutSuccess";
 import SettingsPage from "./pages/SettingsPage";
+import AuthRoutePage from "./pages/AuthRoutePage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    
     <BrowserRouter>
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<CenteredLayout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/sign-up/success" element={<SignUpSuccess />} />
-          <Route path="/sign-up/error" element={<SignUpError />} />
-          <Route path="/logout" element={<LogOutSuccess />} />
-        </Route>
-
-        <Route path="/:user" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/:user/settings" element={<SettingsPage/>}/>
-
-          <Route path="/:user/journal" element={<JournalPage />}>
-            <Route index element={<JournalThoughts />} />
-            <Route path="self-reflection" element={<JournalSelfReflection />} />
-            <Route
-              path="emotional-processing"
-              element={<JournalEmotionalProcessing />}
-            />
-            <Route path="goals" element={<JournalGoals />} />
-            <Route path="grounding" /* element={<JournalGrounding />} */ />
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<CenteredLayout />}>
+            <Route index element={<LandingPage />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-up/success" element={<SignUpSuccess />} />
+            <Route path="/sign-up/error" element={<SignUpError />} />
+            <Route path="/logout" element={<LogOutSuccess />} />
           </Route>
-          <Route path="meditation" /* element={<MeditationPage />} */ />
-          <Route path="breathwork" /* element={<BreathworkPage />} */ />
-          <Route path="yoga" /* element={<YogaPage />} */ />
-        </Route>
-      </Routes>
+
+          <Route element={<AuthRoutePage/>}>
+            <Route path="/:user" element={<MainLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="/:user/settings" element={<SettingsPage />} />
+
+              <Route path="/:user/journal" element={<JournalPage />}>
+                <Route index element={<JournalThoughts />} />
+                <Route
+                  path="self-reflection"
+                  element={<JournalSelfReflection />}
+                />
+                <Route
+                  path="emotional-processing"
+                  element={<JournalEmotionalProcessing />}
+                />
+                <Route path="goals" element={<JournalGoals />} />
+                <Route path="grounding" /* element={<JournalGrounding />} */ />
+              </Route>
+              <Route path="meditation" /* element={<MeditationPage />} */ />
+              <Route path="breathwork" /* element={<BreathworkPage />} */ />
+              <Route path="yoga" /* element={<YogaPage />} */ />
+            </Route>
+          </Route>
+        </Routes>
       </AuthProvider>
-    </BrowserRouter>    
+    </BrowserRouter>
   </StrictMode>
 );

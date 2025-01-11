@@ -1,36 +1,72 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
+async function login({ email, password }) {
+  return await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+}
+
+const logout = async () => {
+  return await supabase.auth.signOut();
+};
+
+const register = async (email, password, name, surname) => {
+  return await supabase.auth.signUp({
+    email,
+    password,
+    name,
+    surname,
+  });
+};
+
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {return Boolean(localStorage.getItem("isLoggedIn"))});
-  const [userName, setUserName] = useState(() => {return localStorage.getItem("userName") || ""});
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState(null);
+
+  const getUserName = async (userId) => {
+    const { data: profileData, error } = await supabase
+      .from("profiles")
+      .select("name")
+      .eq("id", userId)
+      .single();
+
+      setUserName(profileData.name)
+  };
+
 
   useEffect(() => {
-    localStorage.setItem("isLoggedIn", isLoggedIn);
-    localStorage.setItem("userName", userName);
-  }, [isLoggedIn, userName])
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN") {
+        setIsLoggedIn(true);
+        setUser(session.user);
 
-  const login = (name) => {
-    setIsLoggedIn(true);
-    setUserName(name);
-  };
+        getUserName(session.user.id)
+      }
 
-  const logout = () => {
-    setIsLoggedIn(false);
-    setUserName("");
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userName");
-    navigate("/logout")
-  };
+      if (event === "SIGNED_OUT") {
+        setIsLoggedIn(false);
+        setUser(null);
+        setUserName(null);
+      }
+    });
+
+    return () => {
+      data.subscription.unsubscribe();
+    };
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userName, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, userName, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

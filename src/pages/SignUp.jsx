@@ -43,8 +43,8 @@ export const SignUp = () => {
     }
     try {
       const { data: user, error: authError } = await supabase.auth.signUp({
-        email: email,
-        password: password,
+        email,
+        password,
       });
 
       if (authError) {
@@ -59,7 +59,7 @@ export const SignUp = () => {
           email,
           created_at: new Date(),
         },
-      ]);
+      ]); 
 
       if (dbError) {
         throw dbError;

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../supabaseClient";
 import { useAuth } from "../context/AuthContext";
 
-import { Link, replace } from "react-router";
+import { Link } from "react-router";
 
 import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
 
@@ -11,48 +10,20 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { login, userName } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const { data: authData, error: authError } =
-        await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-      if (authError) {
-        throw authError;
-      }
-
-      console.log("Login successful!", authData);
-
-      /* const userRoute = authData.user.user_metadata?.name || email.split("@")[0]; */
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select("name")
-        .eq("id", authData.user.id)
-        .single();
-
-      if (profileError) {
-        throw profileError;
-      }
-      const userName = profileData.name;
-      login(userName);
-      navigate(`/${userName}`, { replace: true });
-    } catch (err) {
-      console.error("Error during login:", err.message);
-      setError("Invalid email or password. Please try again.");
-    }
+    const { data, error } = await login({ email, password });
+    navigate(`/${userName}`)
   };
 
   return (
     <>
       <ReturnHomeBtn />
-      <h2 className="mt-10 mb-4">Sign in to your account</h2>
+      <h2 className="mt-8 mb-4">Sign in to your account</h2>
       <form
         className="w-full max-w-xs flex flex-col justify-center items-center"
         onSubmit={handleLogin}
@@ -94,7 +65,7 @@ export const SignIn = () => {
         <span>Don't have an account? </span>
         <Link
           to="/sign-up"
-          className="text-cyan-light font-bold transition ease-in-out duration-800 transform hover:underline "
+          className="mb-10 text-cyan-light font-bold transition ease-in-out duration-800 transform hover:underline "
         >
           Sign up
         </Link>
