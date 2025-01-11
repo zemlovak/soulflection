@@ -10,8 +10,41 @@ import {
 
 import "./Dashboard.css";
 import UserGreeting from "../components/UserGreeting";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseClient";
 
-export const Dashboard = () => { 
+
+const formatDate = (isoDate) => {
+  const date = new Date(isoDate);
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+};
+
+export const Dashboard = () => {
+  const [journalEntries, setJournalEntries] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const getJournalEntries = async () => {
+      const { data, error } = await supabase
+        .from("journal_entries")
+        .select()
+        .order("created_at", { ascending: false })
+        .limit(4);
+
+      if (error) {
+        console.error("Error fetching journal entries:", error);
+        setError("Failed to fetch journal entries.");
+      } else {
+        setJournalEntries(data || []);
+      }
+    };
+
+    getJournalEntries();
+  }, []);
+
 
   return (
     <>
@@ -40,10 +73,7 @@ export const Dashboard = () => {
               </button>
             </Link>
           </div>
-          <p>17/12/2024 16:48 Today, I feel optimistic as I applied for ...</p>
-          <p>17/12/2024 16:48 Today, I feel optimistic as I applied for ...</p>
-          <p>17/12/2024 16:48 Today, I feel optimistic as I applied for ...</p>
-          <p>17/12/2024 16:48 Today, I feel optimistic as I applied for ...</p>
+          {journalEntries.map((entry) => <div className="w-full max-h-12 overflow-hidden text-left"><span className="font-medium text-lg">{formatDate(entry.created_at)}</span> <p key={entry.id}>{entry.content}</p></div>)}          
         </div>
         <div className=" bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8 overflow-hidden">
           <div className="w-full flex justify-between items-center mb-4 mr-4">
@@ -110,8 +140,6 @@ export const Dashboard = () => {
           </p>
         </div>
       </div>
-
-      
     </>
   );
 };
