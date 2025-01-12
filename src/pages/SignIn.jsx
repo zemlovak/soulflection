@@ -10,14 +10,16 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login, userName } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const { data, error } = await login({ email, password });
-    navigate(`/${userName}`)
+    if(error) {
+      setError(error)
+    }
   };
 
   return (

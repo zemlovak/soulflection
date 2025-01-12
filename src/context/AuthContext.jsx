@@ -39,10 +39,9 @@ export const AuthProvider = ({ children }) => {
       .select("name")
       .eq("id", userId)
       .single();
-
-      setUserName(profileData.name)
+    console.log("profileData:", profileData);
+    return profileData.name;
   };
-
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -50,13 +49,17 @@ export const AuthProvider = ({ children }) => {
         setIsLoggedIn(true);
         setUser(session.user);
 
-        getUserName(session.user.id)
+        getUserName(session.user.id).then((name) => {
+          console.log("name: (response)", name);
+          setUserName(name);
+        });
       }
 
       if (event === "SIGNED_OUT") {
         setIsLoggedIn(false);
         setUser(null);
         setUserName(null);
+        console.log(userName);
       }
     });
 
@@ -65,8 +68,17 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (userName !== null) {
+      console.log("userName", userName);
+      navigate(`/${userName}`);
+    }
+  }, [userName]);
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, userName, login, logout, register }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, user, userName, login, logout, register }}
+    >
       {children}
     </AuthContext.Provider>
   );
