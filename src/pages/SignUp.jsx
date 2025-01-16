@@ -7,6 +7,7 @@ import { supabase } from "../../supabaseClient";
 
 import "./SignUp.css";
 import ReturnHomeBtn from "../components/ReturnHomeBtn";
+import { useAuth } from "../context/AuthContext";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -17,7 +18,7 @@ export const SignUp = () => {
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  const { register } = useAuth();
 
   const validatePassword = (password) => {
     const passwordRegex =
@@ -27,6 +28,7 @@ export const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
     if (!consent) {
       setError("You must consent to the Privacy Policy to create an account.");
       return;
@@ -41,37 +43,19 @@ export const SignUp = () => {
       );
       return;
     }
-    try {
-      const { data: user, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-      });
 
-      if (authError) {
-        throw authError;
-      }
+    const { data: user, error: authError } = await register(
+      email,
+      password,
+      name,
+      surname
+    );
 
-      const { error: dbError } = await supabase.from("profiles").insert([
-        {
-          id: user.user.id,
-          name,
-          surname,
-          email,
-          created_at: new Date(),
-        },
-      ]); 
-
-      if (dbError) {
-        throw dbError;
-      }
-
-      navigate("/sign-up/success");
-    } catch (err) {
-      console.error("Error during sign-up:", err.message);
-      setError(
-        "An error occurred while creating your account. Please try again."
-      );
-      navigate("/sign-up/error");
+    if (authError) {
+      console.error(authError.message);
+      setError("Something went wrong, please try again later.");
+    } else {
+      console.log("sign-up success");
     }
   };
 
@@ -146,7 +130,9 @@ export const SignUp = () => {
           />
         </div>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && (
+          <p className="my-2 text-sm font-medium text-red-alert">{error}</p>
+        )}
 
         <div className="w-full consent">
           <input
@@ -181,8 +167,13 @@ export const SignUp = () => {
         </button>
       </form>
       <div className="footnote">
-        <span >Already have an account? </span>
-        <Link to="/sign-in" className="text-cyan-light font-bold transition ease-in-out duration-800 transform hover:underline ">Sign in</Link>
+        <span>Already have an account? </span>
+        <Link
+          to="/sign-in"
+          className="text-cyan-light font-bold transition ease-in-out duration-800 transform hover:underline "
+        >
+          Sign in
+        </Link>
       </div>
     </>
   );

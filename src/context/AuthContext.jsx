@@ -18,11 +18,23 @@ const logout = async () => {
 };
 
 const register = async (email, password, name, surname) => {
-  return await supabase.auth.signUp({
+  const slugNum = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+  console.log(slugNum);
+  const slug = `${name.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}-${surname
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")}-${slugNum}`;
+  console.log(slug);
+
+  const { data: singUpData, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
-    name,
-    surname,
+    options: {
+      data: {
+        name,
+        surname,
+        slug,
+      },
+    },
   });
 };
 
@@ -32,34 +44,24 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
-
-  const getUserName = async (userId) => {
-    const { data: profileData, error } = await supabase
-      .from("profiles")
-      .select("name")
-      .eq("id", userId)
-      .single();
-    console.log("profileData:", profileData);
-    return profileData.name;
-  };
+  const [userUrl, setUserUrl] = useState(null);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN") {
         setIsLoggedIn(true);
         setUser(session.user);
+        setUserName(session.user.user_metadata.name);
+        setUserUrl(session.user.user_metadata.slug);
 
-        getUserName(session.user.id).then((name) => {
-          console.log("name: (response)", name);
-          setUserName(name);
-        });
+        navigate(`/${session.user.user_metadata.slug}`)
       }
 
       if (event === "SIGNED_OUT") {
         setIsLoggedIn(false);
         setUser(null);
         setUserName(null);
-        console.log(userName);
+        setUserUrl(null);
       }
     });
 
@@ -68,16 +70,9 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (userName !== null) {
-      console.log("userName", userName);
-      navigate(`/${userName}`);
-    }
-  }, [userName]);
-
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, user, userName, login, logout, register }}
+      value={{ isLoggedIn, user, userName, userUrl, login, logout, register }}
     >
       {children}
     </AuthContext.Provider>
