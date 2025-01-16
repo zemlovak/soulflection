@@ -13,6 +13,7 @@ export default {
       'cyan-ultradark': '#042f2e',
       'cyan-dark': '#115e59',
       'cyan-light': '#0d9488',
+      'red-alert': '#D22B2B',
     },
     fontFamily: {
       'rubik': 'Rubik',

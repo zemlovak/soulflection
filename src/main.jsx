@@ -38,11 +38,11 @@ createRoot(document.getElementById("root")).render(
           </Route>
 
           <Route element={<AuthRoutePage/>}>
-            <Route path="/:user" element={<MainLayout />}>
+            <Route path="/:userId" element={<MainLayout />}>
               <Route index element={<Dashboard />} />
-              <Route path="/:user/settings" element={<SettingsPage />} />
+              <Route path="/:userId/settings" element={<SettingsPage />} />
 
-              <Route path="/:user/journal" element={<JournalPage />}>
+              <Route path="/:userId/journal" element={<JournalPage />}>
                 <Route index element={<JournalThoughts />} />
                 <Route
                   path="self-reflection"

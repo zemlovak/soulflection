@@ -1,4 +1,7 @@
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseClient";
+import { useAuth } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -7,12 +10,8 @@ import {
   faPenToSquare,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-
 import "./Dashboard.css";
 import UserGreeting from "../components/UserGreeting";
-import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
-
 
 const formatDate = (isoDate) => {
   const date = new Date(isoDate);
@@ -22,23 +21,37 @@ const formatDate = (isoDate) => {
   }).format(date);
 };
 
+const titleStyleMap = {
+  "Journal Thoughts": " bg-cyan-light text-white",
+  "Self-reflection": "bg-cyan-ultradark bg-opacity-50 text-white",
+  "Emotional Processing": "bg-cyan-dark text-white",
+  "Goals": "bg-cyan-ultradark text-white",
+  "Grounding": "bg-black bg-opacity-50 text-white",
+};
+
 export const Dashboard = () => {
   const [journalEntries, setJournalEntries] = useState([]);
   const [error, setError] = useState("");
+  const [moonPhase, setMoonPhase] = useState("")
+  const { user, userUrl } = useAuth();
+
 
   useEffect(() => {
+    if (!user) return;
+
     const getJournalEntries = async () => {
-      const { data, error } = await supabase
+      const { data: journalData, error: journalError } = await supabase
         .from("journal_entries")
         .select()
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(4);
 
-      if (error) {
-        console.error("Error fetching journal entries:", error);
+      if (journalError) {
+        console.error("Error fetching journal entries:", journalError);
         setError("Failed to fetch journal entries.");
       } else {
-        setJournalEntries(data || []);
+        setJournalEntries(journalData || []);
       }
     };
 
@@ -46,16 +59,36 @@ export const Dashboard = () => {
   }, []);
 
 
+  useEffect(()=>{
+    const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+    const WEATHER_API_URL = import.meta.env.VITE_WEATHER_API_URL;
+
+    const date = new Date;
+    const today = date.toISOString().split('T')[0];
+
+    const fetchMoonData = async () => {
+      try {
+        const response = await fetch(`${WEATHER_API_URL}?key=${WEATHER_API_KEY}&q=Prague&dt=${today}`);
+        const data = await response.json()
+        setMoonPhase(data.astronomy.astro.moon_phase)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchMoonData();
+  },[])
+
   return (
     <>
       <UserGreeting />
       <div className="px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl grid gap-4 lg:grid-cols-4 lg:grid-rows-2 sm:grid-cols-2 sm:grid-rows-3 text-white">
-        <div className="flex justify-center items-center bg-transparent rounded-xl">
+        <div className="flex flex-col justify-center items-center bg-transparent rounded-xl">
           <img
             className="size-48 drop-shadow-lg"
             src="src/assets/images/full-moon.png"
             alt="full moon"
           />
+          <p className="text-black">{moonPhase}</p>
         </div>
         <div className="flex flex-col justify-between items-center bg-cyan-ultradark bg-opacity-50 rounded-xl px-4 py-4 sm:py-8">
           <p>You're on a</p>
@@ -65,15 +98,32 @@ export const Dashboard = () => {
           <p>meditation streak</p>
           <p className="text-xl">Keep it up!</p>
         </div>
-        <div className="flex flex-col justify-between items-center lg:col-span-2 bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8 relative bookmark">
+        <div className="flex flex-col justify-start items-center lg:col-span-2 bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8 relative bookmark">
           <div className="w-full text-right mb-2 mr-4">
-            <Link>
+            <Link to={`/${userUrl}/journal`}>
               <button className="btn bg-white text-cyan-ultradark">
                 <FontAwesomeIcon icon={faPenToSquare} /> New
               </button>
             </Link>
           </div>
-          {journalEntries.map((entry) => <div className="w-full max-h-12 overflow-hidden text-left"><span className="font-medium text-lg">{formatDate(entry.created_at)}</span> <p key={entry.id}>{entry.content}</p></div>)}          
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            journalEntries.map((entry) => (
+              <div
+                key={entry.id}
+                className="w-full mb-2 max-h-12 overflow-hidden text-left"
+              >
+                <div className="flex justify-start items-center">
+                  <div className="font-medium text-lg">
+                    {formatDate(entry.created_at)}
+                  </div>
+                  <div key={entry.id} className={`ml-4 px-2 rounded-md ${titleStyleMap[entry.title]  ?? 'bg-cyan-ultradark text-white'}`}>{entry.title}</div>
+                </div>{" "}
+                <p key={entry.id}>{entry.content.substring(0, 68)} ...</p>
+              </div>
+            ))
+          )}
         </div>
         <div className=" bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8 overflow-hidden">
           <div className="w-full flex justify-between items-center mb-4 mr-4">

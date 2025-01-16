@@ -4,8 +4,6 @@ import { useAuth } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightFromBracket,
-  faChartArea,
-  faChartBar,
   faChartPie,
   faGear,
   faUserCircle,
@@ -14,7 +12,7 @@ import { NavLink } from "react-router";
 
 export const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { logout, userName } = useAuth();
+  const { logout, userUrl } = useAuth();
 
   return (
     <div className="relative inline-block text-left">
@@ -35,14 +33,14 @@ export const UserDropdown = () => {
         >
           <div className="py-1">
             <NavLink
-              to={`/${userName}`}
+              to={`/${userUrl}`}
               className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-dark hover:bg-opacity-25 hover:font-medium"
             >
               <FontAwesomeIcon icon={faChartPie} className="mr-4" />
               Dashboard
             </NavLink>
             <NavLink
-              to={`/${userName}/settings`}
+              to={`/${userUrl}/settings`}
               className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-dark hover:bg-opacity-25 hover:font-medium"
             >
               <FontAwesomeIcon icon={faGear} className="mr-4"/>

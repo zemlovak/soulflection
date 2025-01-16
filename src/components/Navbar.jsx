@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
 
 export const Navbar = () => {
-  const { userName } = useAuth();
+  const { userName, userUrl } = useAuth();
   return (
     <>
       <nav className="w-full h-6">
         <ul className="flex justify-around">
-          <Link to={`/${userName}/journal`}>
+          <Link to={`/${userUrl}/journal`}>
             <li className="ml-8 mr-2 hover:font-semibold">journaling</li>
           </Link>
           <Link>
