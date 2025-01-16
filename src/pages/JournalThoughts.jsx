@@ -14,7 +14,6 @@ import { Timer } from "../components/Timer";
 import "./JournalThoughts.css";
 
 export const JournalThoughts = () => {
-  const { userName } = useAuth();
   const [thoughtsEntry, setThoughtsEntry] = useState("");
   const [loading, setLoading] = useState(false);
 

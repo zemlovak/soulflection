@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 export const JournalPage = () => {
   const location = useLocation();
-  const { userName } = useAuth();
+  const { userUrl } = useAuth();
 
   return (
     <div className="min-w-96 px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl">
@@ -12,7 +12,7 @@ export const JournalPage = () => {
         <NavLink
           to="."
           end
-          className={({ isActive }) => 
+          className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "font-semibold bg-cyan-light bg-opacity-95" : ""
             } bg-cyan-dark bg-opacity-50 text-white text-sm rounded-t-lg`
@@ -21,7 +21,7 @@ export const JournalPage = () => {
           Thoughts
         </NavLink>
         <NavLink
-          to={`/${userName}/journal/self-reflection`}
+          to={`/${userUrl}/journal/self-reflection`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -31,7 +31,7 @@ export const JournalPage = () => {
           Self-reflection
         </NavLink>
         <NavLink
-          to={`/${userName}/journal/emotional-processing`}
+          to={`/${userUrl}/journal/emotional-processing`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -41,7 +41,7 @@ export const JournalPage = () => {
           Emotional processing
         </NavLink>
         <NavLink
-          to={`/${userName}/journal/goals`}
+          to={`/${userUrl}/journal/goals`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
@@ -51,7 +51,7 @@ export const JournalPage = () => {
           Goals
         </NavLink>
         <NavLink
-          to={`/${userName}/journal/grounding`}
+          to={`/${userUrl}/journal/grounding`}
           className={({ isActive }) =>
             `min-w-max p-2 ${
               isActive ? "bg-cyan-light bg-opacity-95" : ""
