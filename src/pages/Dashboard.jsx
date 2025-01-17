@@ -25,16 +25,28 @@ const titleStyleMap = {
   "Journal Thoughts": " bg-cyan-light text-white",
   "Self-reflection": "bg-cyan-ultradark bg-opacity-50 text-white",
   "Emotional Processing": "bg-cyan-dark text-white",
-  "Goals": "bg-cyan-ultradark text-white",
-  "Grounding": "bg-black bg-opacity-50 text-white",
+  Goals: "bg-cyan-ultradark text-white",
+  Grounding: "bg-black bg-opacity-50 text-white",
+};
+
+const moonPhaseImgMap = {
+  "Full Moon": "full-moon.png",
+  "New Moon": "new-moon.png",
+  "Waxing Crescent": "waxing-crescent.png",
+  "Waxing Gibbous": "waxing-gibbous.png",
+  "Waning Gibbous": "waning-gibbous.png",
+  "Waning Crescent": "waning-crescent.png",
+  "First Quarter": "first-quarter.png",
+  "Last Quarter": "last-quarter.png",
 };
 
 export const Dashboard = () => {
   const [journalEntries, setJournalEntries] = useState([]);
   const [error, setError] = useState("");
-  const [moonPhase, setMoonPhase] = useState("")
+  const [moonPhase, setMoonPhase] = useState("");
+  const [quote, setQuote] = useState("");
+  const [author, setAuthor] = useState("Unknown");
   const { user, userUrl } = useAuth();
-
 
   useEffect(() => {
     if (!user) return;
@@ -58,37 +70,76 @@ export const Dashboard = () => {
     getJournalEntries();
   }, []);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     const WEATHER_API_URL = import.meta.env.VITE_WEATHER_API_URL;
 
-    const date = new Date;
-    const today = date.toISOString().split('T')[0];
+    const date = new Date();
+    const today = date.toISOString().split("T")[0];
 
     const fetchMoonData = async () => {
       try {
-        const response = await fetch(`${WEATHER_API_URL}?key=${WEATHER_API_KEY}&q=Prague&dt=${today}`);
-        const data = await response.json()
-        setMoonPhase(data.astronomy.astro.moon_phase)
+        const response = await fetch(
+          `${WEATHER_API_URL}?key=${WEATHER_API_KEY}&q=Prague&dt=${today}`
+        );
+        const data = await response.json();
+        setMoonPhase(data.astronomy.astro.moon_phase);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
     fetchMoonData();
-  },[])
+  }, []);
+
+  useEffect(() => {
+    const getQuote = async () => {
+      const url =
+        "https://metaapi-mindfulness-quotes.p.rapidapi.com/v1/mindfulness";
+      const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key":
+            "2182b76a31msh73898d1aaf3ae66p146f35jsna736322c65aa",
+          "x-rapidapi-host": "metaapi-mindfulness-quotes.p.rapidapi.com",
+        },
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        setQuote(result.quote);
+        if (!result.author) {
+          setAuthor("Unknown");
+        } else {
+          setAuthor(result.author);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getQuote();
+  }, []);
 
   return (
     <>
       <UserGreeting />
       <div className="px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl grid gap-4 lg:grid-cols-4 lg:grid-rows-2 sm:grid-cols-2 sm:grid-rows-3 text-white">
         <div className="flex flex-col justify-center items-center bg-transparent rounded-xl">
-          <img
-            className="size-48 drop-shadow-lg"
-            src="src/assets/images/full-moon.png"
-            alt="full moon"
-          />
-          <p className="text-black">{moonPhase}</p>
+          {moonPhase ? (
+            <>
+              <img
+                className="drop-shadow-lg"
+                src={`src/assets/images/moon_phases/${moonPhaseImgMap[moonPhase]}`}
+                alt={`${moonPhase}`}
+              />
+              <p className="text-black font-sanbrainy text-5xl">{moonPhase}</p>
+            </>
+          ) : (
+            <p className="font-sanbrainy text-4xl text-black">
+              Loading moon phase <span className="animate-pulse">...</span>
+            </p>
+          )}
         </div>
         <div className="flex flex-col justify-between items-center bg-cyan-ultradark bg-opacity-50 rounded-xl px-4 py-4 sm:py-8">
           <p>You're on a</p>
@@ -118,7 +169,15 @@ export const Dashboard = () => {
                   <div className="font-medium text-lg">
                     {formatDate(entry.created_at)}
                   </div>
-                  <div key={entry.id} className={`ml-4 px-2 rounded-md ${titleStyleMap[entry.title]  ?? 'bg-cyan-ultradark text-white'}`}>{entry.title}</div>
+                  <div
+                    key={entry.id}
+                    className={`ml-4 px-2 rounded-md ${
+                      titleStyleMap[entry.title] ??
+                      "bg-cyan-ultradark text-white"
+                    }`}
+                  >
+                    {entry.title}
+                  </div>
                 </div>{" "}
                 <p key={entry.id}>{entry.content.substring(0, 68)} ...</p>
               </div>
@@ -184,10 +243,11 @@ export const Dashboard = () => {
             <p className="text-lg mt-8">Start breathing now</p>
           </div>
         </div>
-        <div className="lg:col-span-2 bg-transparent rounded-xl px-4 pt-16 sm:pt-20">
+        <div className="lg:col-span-2 bg-transparent rounded-xl px-4 pt-12 sm:pt-20">
           <p className="font-sanbrainy text-6xl text-wrap text-center align-middle text-black">
-            "You can't stop the waves, but you can learn to surf"
+          <q>{quote}</q>
           </p>
+          <p className="block text-black font-thin text-sm text-right">~ {author}</p>
         </div>
       </div>
     </>
