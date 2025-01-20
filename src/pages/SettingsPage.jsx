@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../supabaseClient";
+import { supabase } from "../Supabase/supabaseClient";
 
 const SettingsPage = () => {
   const fetchOriginalValues = async () => {
