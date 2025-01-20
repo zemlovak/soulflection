@@ -12,6 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Dashboard.css";
 import UserGreeting from "../components/UserGreeting";
+import Modal from "../components/Modal";
+import CalendarTile from "../components/CalendarTile";
 
 const formatDate = (isoDate) => {
   const date = new Date(isoDate);
@@ -47,6 +49,7 @@ export const Dashboard = () => {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("Unknown");
   const { user, userUrl } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -184,16 +187,25 @@ export const Dashboard = () => {
             ))
           )}
         </div>
-        <div className=" bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8 overflow-hidden">
+        <CalendarTile/>
+        {/* <div className=" bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8 overflow-hidden">
           <div className="w-full flex justify-between items-center mb-4 mr-4">
             <div>
               <FontAwesomeIcon icon={faBell} /> Up next
             </div>
             <Link>
-              <button className="btn bg-white text-cyan-ultradark">
+              <button
+                className="btn bg-white text-cyan-ultradark"
+                onClick={() => setIsModalOpen(true)}
+              >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
             </Link>
+
+            <Modal
+              show={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
           </div>
           <ol>
             <li>
@@ -231,7 +243,7 @@ export const Dashboard = () => {
             </li>
             <hr />
           </ol>
-        </div>
+        </div> */}
         <div className=" bg-cyan-ultradark bg-opacity-50 rounded-xl pt-4 px-4 pb-4 sm:pb-8">
           <div className="w-full h-full flex flex-col justify-center items-center">
             <Link>
@@ -245,9 +257,11 @@ export const Dashboard = () => {
         </div>
         <div className="lg:col-span-2 bg-transparent rounded-xl px-4 pt-12 sm:pt-20">
           <p className="font-sanbrainy text-6xl text-wrap text-center align-middle text-black">
-          <q>{quote}</q>
+            <q>{quote}</q>
           </p>
-          <p className="block text-black font-thin text-sm text-right">~ {author}</p>
+          <p className="block text-black font-thin text-sm text-right">
+            ~ {author}
+          </p>
         </div>
       </div>
     </>
