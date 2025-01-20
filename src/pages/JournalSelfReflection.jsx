@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../../supabaseClient";
+import { supabase } from "../Supabase/supabaseClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faHeart } from "@fortawesome/free-solid-svg-icons";
 

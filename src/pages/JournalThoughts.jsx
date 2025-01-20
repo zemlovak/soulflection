@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,7 +7,7 @@ import {
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { supabase } from "../../supabaseClient";
+import { supabase } from "../Supabase/supabaseClient";
 import { useAuth } from "../context/AuthContext";
 
 import { Timer } from "../components/Timer";
@@ -26,13 +26,11 @@ export const JournalThoughts = () => {
 
     setLoading(true);
 
-    const { data, error } = await supabase
-      .from("journal_entries") 
-      .insert({
-        title: "Journal Thoughts",
-        content: thoughtsEntry,
-        created_at: new Date().toISOString(),
-      });
+    const { data, error } = await supabase.from("journal_entries").insert({
+      title: "Journal Thoughts",
+      content: thoughtsEntry,
+      created_at: new Date().toISOString(),
+    });
 
     setLoading(false);
 
