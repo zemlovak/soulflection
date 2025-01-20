@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router";
 
-import { supabase } from "../Supabase/supabaseClient";
+import { supabase } from "../../Supabase/supabaseClient";
 
 import "./SignUp.css";
-import ReturnHomeBtn from "../components/ReturnHomeBtn";
-import { useAuth } from "../context/AuthContext";
+import ReturnHomeBtn from "../../components/ReturnHomeBtn";
+import { useAuth } from "../../context/AuthContext";
 
 export const SignUp = () => {
   const [name, setName] = useState("");

@@ -1,4 +1,4 @@
-import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
+import { ReturnHomeBtn } from "../../components/ReturnHomeBtn";
 
 export const SignUpSuccess = () => {
   return (

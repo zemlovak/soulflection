@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, Outlet, useParams } from "react-router";
-import { useAuth } from "../context/AuthContext";
-import ReturnHomeBtn from "../components/ReturnHomeBtn";
-import AuthFootnote from "../components/AuthFootnote";
+import { useAuth } from "../../context/AuthContext";
+import ReturnHomeBtn from "../../components/ReturnHomeBtn";
+import AuthFootnote from "../../components/AuthFootnote";
 
 export const AuthRoutePage = () => {
   const { userId } = useParams();

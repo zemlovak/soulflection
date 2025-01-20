@@ -1,92 +1,95 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../Supabase/supabaseClient";
+import { useAuth } from "../context/AuthContext";
 
-const SettingsPage = () => {
-  const fetchOriginalValues = async () => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("name, surname, email")
-      .single(); 
-    if (error) throw error;
-    return data;
-  };
+export const SettingsPage = () => {
+  const { user } = useAuth();
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [userData, setUserData] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
+    name: `${user.user_metadata.name}`,
+    surname: `${user.user_metadata.surname}`,
+    email: `${user.email}`,
+    password: `${user.user_metadata.sub}`,
   });
-
-  const [originalData, setOriginalData] = useState({});
-  const [isEditing, setIsEditing] = useState({
-    name: false,
-    surname: false,
-    password: false,
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchOriginalValues();
-      setUserData(data);
-      setOriginalData(data);
-    };
-    fetchData();
-  }, []);
-
-  const handleEditToggle = (field) => {
-    setIsEditing((prev) => ({ ...prev, [field]: !prev[field] }));
-  };
-
-  const handleInputChange = (field, value) => {
-    setUserData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSave = async () => {
-    await updateSupabase(userData);
-    setOriginalData(userData);
-    setIsEditing({ name: false, surname: false, password: false });
-  };
-
-  const handleDiscard = () => {
-    setUserData(originalData);
-    setIsEditing({ name: false, surname: false, password: false });
-  };
 
   return (
-    <form className="w-full">
-      {["name", "surname", "email", "password"].map((field) => (
-        <div className="form-row" key={field}>
-          <label className="form-label">{field}</label>
-          {isEditing[field] ? (
-            <input
-              type={field === "password" ? "password" : "text"}
-              value={userData[field]}
-              onChange={(e) => handleInputChange(field, e.target.value)}
-            />
-          ) : (
-            <span>{userData[field] || "Not Set"}</span>
-          )}
-          <button className="btn" onClick={(e) => {e.preventDefault;handleEditToggle(field)}}>
-            {isEditing[field] ? "Cancel" : "Edit"}
+    <div className="px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl grid gap-2 grid-cols-1 text-white">
+      <form className="min-w-full mx-48">
+        <div>
+          <label className="form-label">name</label>
+          <input
+            className={`max-w-48 bg-transparent text-cyan-ultradark ${
+              !isDisabled ?? form - field
+            }`}
+            type="text"
+            placeholder={`${userData.name}`}
+            disabled
+          />
+          <button
+            className="inline-block ml-2"
+            onClick={(e) => {
+              e.preventDefault;
+              setIsDisabled((prev) => {
+                !prev;
+              });
+              console.log(isDisabled);
+            }}
+          >
+            Edit
           </button>
         </div>
-      ))}
-      <div className="mt-4">
-        <button className="cta-btn"
-          onClick={handleSave}
-          disabled={JSON.stringify(userData) === JSON.stringify(originalData)}
-        >
-          Save
-        </button>
-        <button className="btn"
-          onClick={handleDiscard}
-          disabled={JSON.stringify(userData) === JSON.stringify(originalData)}
-        >
+        <div>
+          <label className="form-label">surname</label>
+          <input
+            className="bg-transparent text-cyan-ultradark"
+            type="text"
+            placeholder={`${userData.surname}`}
+            disabled
+          />
+          <button
+            className="inline-block ml-2"
+            onClick={(e) => {
+              e.preventDefault;
+              setIsDisabled((prev) => {
+                !prev;
+              });
+              console.log(isDisabled);
+            }}
+          >
+            Edit
+          </button>
+        </div>
+        <div>
+          <label className="form-label">e-mail</label>
+          <input
+            className="bg-transparent text-cyan-ultradark"
+            type="text"
+            placeholder={`${userData.email}`}
+            disabled={isDisabled}
+          />
+          <button
+            className="inline-block ml-2"
+            onClick={(e) => {
+              e.preventDefault;
+              setIsDisabled((prev) => {
+                !prev;
+              });
+              console.log(isDisabled);
+            }}
+          >
+            Edit
+          </button>
+        </div>
+
+        <button className="mt-8 mr-8 font-bold" type="reset">
           Discard
         </button>
-      </div>
-    </form>
+        <button className="cta-btn" type="submit">
+          SAVE CHANGES
+        </button>
+      </form>
+    </div>
   );
 };
 

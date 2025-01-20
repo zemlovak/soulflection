@@ -5,11 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import "./reset.css";
 import "./index.css";
 
-import LandingPage from "./pages/LandingPage";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import SignUpSuccess from "./pages/SignUpSuccess";
-import SignUpError from "./pages/SignUpError";
+import LandingPage from "./pages/AuthPages/LandingPage";
+import SignIn from "./pages/AuthPages/SignIn";
+import SignUp from "./pages/AuthPages/SignUp";
+import SignUpSuccess from "./pages/AuthPages/SignUpSuccess";
+import SignUpError from "./pages/AuthPages/SignUpError";
 import MainLayout from "./pages/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import JournalPage from "./pages/Journal";
@@ -19,9 +19,9 @@ import JournalEmotionalProcessing from "./pages/JournalEmotionalProcessing";
 import JournalGoals from "./pages/JournalGoals";
 import CenteredLayout from "./pages/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
-import LogOutSuccess from "./pages/LogOutSuccess";
+import LogOutSuccess from "./pages/AuthPages/LogOutSuccess";
 import SettingsPage from "./pages/SettingsPage";
-import AuthRoutePage from "./pages/AuthRoutePage";
+import AuthRoutePage from "./pages/AuthPages/AuthRoutePage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ReturnHomeBtn } from "../components/ReturnHomeBtn";
+import { ReturnHomeBtn } from "../../components/ReturnHomeBtn";
 
 export const LogOutSuccess = () => {
   const navigate = useNavigate();
