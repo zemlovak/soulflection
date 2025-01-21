@@ -1,5 +1,3 @@
-import React from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMasksTheater,
@@ -7,7 +5,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "../pages/JournalThoughts.css";
-import { faSpeakap } from "@fortawesome/free-brands-svg-icons";
 
 export const JournalEmotionalProcessing = () => {
   return (

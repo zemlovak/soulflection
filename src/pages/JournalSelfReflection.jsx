@@ -5,7 +5,6 @@ import { faBookOpen, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import "./JournalThoughts.css";
 
-
 export const JournalSelfReflection = () => {
   const [prompt1, setPrompt1] = useState("");
   const [prompt2, setPrompt2] = useState("");
@@ -23,7 +22,7 @@ export const JournalSelfReflection = () => {
     setPrompt4("");
     setPrompt5("");
     setPrompt6("");
-  }
+  };
 
   const handleSaveEntry = async (e) => {
     e.preventDefault();
@@ -58,8 +57,6 @@ export const JournalSelfReflection = () => {
       alert("Entry saved successfully!");
       resetEntries();
     }
-
-    
   };
 
   return (

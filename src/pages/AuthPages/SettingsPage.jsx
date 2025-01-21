@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../Supabase/supabaseClient";
-import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import { supabase } from "../../Supabase/supabaseClient";
+import { useAuth } from "../../context/AuthContext";
 
 export const SettingsPage = () => {
   const { user } = useAuth();
@@ -59,7 +59,6 @@ export const SettingsPage = () => {
             onClick={(e) => {
               e.preventDefault();
               setIsDisabled((prev) => ({ ...prev, name: !prev.name }));
-              console.log(isDisabled);
             }}
           >
             {isDisabled.name ? "Edit" : "Close"}
@@ -83,7 +82,6 @@ export const SettingsPage = () => {
             onClick={(e) => {
               e.preventDefault();
               setIsDisabled((prev) => ({ ...prev, surname: !prev.surname }));
-              console.log(isDisabled);
             }}
           >
             {isDisabled.surname ? "Edit" : "Close"}
@@ -107,7 +105,6 @@ export const SettingsPage = () => {
             onClick={(e) => {
               e.preventDefault();
               setIsDisabled((prev) => ({ ...prev, email: !prev.email }));
-              console.log(isDisabled);
             }}
           >
             {isDisabled.email ? "Edit" : "Close"}

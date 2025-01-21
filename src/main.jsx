@@ -10,17 +10,17 @@ import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import SignUpSuccess from "./pages/AuthPages/SignUpSuccess";
 import SignUpError from "./pages/AuthPages/SignUpError";
-import MainLayout from "./pages/MainLayout";
+import MainLayout from "./pages/Layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import JournalPage from "./pages/Journal";
 import JournalThoughts from "./pages/JournalThoughts";
 import JournalSelfReflection from "./pages/JournalSelfReflection";
 import JournalEmotionalProcessing from "./pages/JournalEmotionalProcessing";
 import JournalGoals from "./pages/JournalGoals";
-import CenteredLayout from "./pages/CenteredLayout";
+import CenteredLayout from "./pages/Layout/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
 import LogOutSuccess from "./pages/AuthPages/LogOutSuccess";
-import SettingsPage from "./pages/SettingsPage";
+import SettingsPage from "./pages/AuthPages/SettingsPage";
 import AuthRoutePage from "./pages/AuthPages/AuthRoutePage";
 
 createRoot(document.getElementById("root")).render(

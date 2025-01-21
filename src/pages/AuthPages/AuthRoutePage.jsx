@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, Outlet, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import ReturnHomeBtn from "../../components/ReturnHomeBtn";
