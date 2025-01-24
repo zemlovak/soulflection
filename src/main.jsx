@@ -12,11 +12,22 @@ import SignUpSuccess from "./pages/AuthPages/SignUpSuccess";
 import SignUpError from "./pages/AuthPages/SignUpError";
 import MainLayout from "./pages/Layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
+
 import JournalPage from "./pages/Journal";
 import JournalThoughts from "./pages/JournalThoughts";
 import JournalSelfReflection from "./pages/JournalSelfReflection";
 import JournalEmotionalProcessing from "./pages/JournalEmotionalProcessing";
 import JournalGoals from "./pages/JournalGoals";
+import JournalGrounding from "./pages/JournalGrounding";
+
+import MeditationPage from "./pages/Meditation";
+import MeditationTimer from "./pages/MeditationTimer";
+import MeditationSounds from "./pages/MeditationSounds";
+import MeditationGuided from "./pages/MeditationGuided";
+
+import BreathworkPage from "./pages/Breathwork";
+import YogaPage from "./pages/Yoga";
+
 import CenteredLayout from "./pages/Layout/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
 import LogOutSuccess from "./pages/AuthPages/LogOutSuccess";
@@ -53,11 +64,15 @@ createRoot(document.getElementById("root")).render(
                   element={<JournalEmotionalProcessing />}
                 />
                 <Route path="goals" element={<JournalGoals />} />
-                <Route path="grounding" /* element={<JournalGrounding />} */ />
+                <Route path="grounding" element={<JournalGrounding />} />
               </Route>
-              <Route path="meditation" /* element={<MeditationPage />} */ />
-              <Route path="breathwork" /* element={<BreathworkPage />} */ />
-              <Route path="yoga" /* element={<YogaPage />} */ />
+              <Route path="/:userId/meditation" element={<MeditationPage />}>
+                <Route index element={<MeditationTimer/>} />
+                <Route path="sounds" element={<MeditationSounds/>} />
+                <Route path="guided" element={<MeditationGuided/>} />
+              </Route>
+              <Route path="breathwork" element={<BreathworkPage />} />
+              <Route path="yoga" element={<YogaPage />} />
             </Route>
           </Route>
         </Routes>
