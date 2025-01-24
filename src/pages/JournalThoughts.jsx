@@ -77,7 +77,7 @@ export const JournalThoughts = () => {
             onChange={(e) => setThoughtsEntry(e.target.value)}
             disabled={loading}
           ></textarea>
-          <Timer />
+          <Timer bottom={4} left={2}/>
         </div>
         <div className="flex flex-row justify-between items-center">
           <button

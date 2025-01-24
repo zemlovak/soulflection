@@ -62,10 +62,10 @@ export const Modal = ({ show, onClose }) => {
     >
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
 
-      <div className="relative bg-image bg-opacity-95 rounded-lg shadow-lg max-w-2xl w-full p-10 z-10">
+      <div className="relative bg-transparent bg-opacity-95 rounded-lg max-w-2xl w-full p-10 z-20">
         <button
           onClick={onClose}
-          className="absolute top-4 right-6 text-cyan-ultradark hover:text-cyan-light"
+          className="absolute top-4 right-6 text-white hover:text-cyan-light"
         >
           <FontAwesomeIcon icon={faClose} />
         </button>

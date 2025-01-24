@@ -8,6 +8,15 @@ import {
 
 import "../pages/JournalThoughts.css";
 
+const promptList = [
+  "What emotion is most present for me right now? Why do I think I'm feeling this way?",
+  "How do I notice it in my body, e.g. tension, warmth?",
+  "What event, thought, or memory might be triggering this emotion? How does that awareness help me understand it better?",
+  "If I imagine this emotion as a shape or color, what would it look like and why?",
+  "What healthy steps can I take—right now or in the future—to cope with or relieve this emotion?",
+  "How can working through this emotion help me grow, learn, or change my perspective moving forward?",
+];
+
 export const JournalEmotionalProcessing = () => {
   const [prompt1, setPrompt1] = useState("");
   const [prompt2, setPrompt2] = useState("");
@@ -31,15 +40,21 @@ export const JournalEmotionalProcessing = () => {
     e.preventDefault();
 
     const mergedEntries = [
+      promptList[0],
       prompt1,
+      promptList[1],
       prompt2,
+      promptList[2],
       prompt3,
+      promptList[3],
       prompt4,
+      promptList[4],
       prompt5,
+      promptList[5],
       prompt6,
     ].join("\n");
 
-    if (!mergedEntries.trim()) {
+    if (!prompt1.trim() && !prompt2.trim() && !prompt3.trim() && !prompt4.trim() && !prompt5.trim() && !prompt6.trim()) {
       alert("Please write something before saving.");
       return;
     }
@@ -87,7 +102,7 @@ export const JournalEmotionalProcessing = () => {
             id="prompt-1"
             rows={3}
             cols={45}
-            placeholder="What emotion is most present for me right now? Why do I think I'm feeling this way?"
+            placeholder={`${promptList[0]}`}
             className="px-4 py-4  mx-4 mb-4 rounded-lg text-cyan-light resize-none"
             value={prompt1}
             onChange={(e) => setPrompt1(e.target.value)}
@@ -98,7 +113,7 @@ export const JournalEmotionalProcessing = () => {
             id="prompt-2"
             rows={3}
             cols={45}
-            placeholder="How do I notice it in my body, e.g. tension, warmth?"
+            placeholder={`${promptList[1]}`}
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
             value={prompt2}
             onChange={(e) => setPrompt2(e.target.value)}
@@ -109,7 +124,7 @@ export const JournalEmotionalProcessing = () => {
             id="prompt-3"
             rows={3}
             cols={45}
-            placeholder="What event, thought, or memory might be triggering this emotion? How does that awareness help me understand it better?"
+            placeholder={`${promptList[2]}`}
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
             value={prompt3}
             onChange={(e) => setPrompt3(e.target.value)}
@@ -120,7 +135,7 @@ export const JournalEmotionalProcessing = () => {
             id="prompt-4"
             rows={3}
             cols={45}
-            placeholder="If I imagine this emotion as a shape or color, what would it look like and why?"
+            placeholder={`${promptList[3]}`}
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
             value={prompt4}
             onChange={(e) => setPrompt4(e.target.value)}
@@ -131,7 +146,7 @@ export const JournalEmotionalProcessing = () => {
             id="prompt-5"
             rows={3}
             cols={45}
-            placeholder="What healthy steps can I take—right now or in the future—to cope with or relieve this emotion?"
+            placeholder={`${promptList[4]}`}
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
             value={prompt5}
             onChange={(e) => setPrompt5(e.target.value)}
@@ -142,7 +157,7 @@ export const JournalEmotionalProcessing = () => {
             id="prompt-6"
             rows={3}
             cols={45}
-            placeholder="How can working through this emotion help me grow, learn, or change my perspective moving forward?"
+            placeholder={`${promptList[5]}`}
             className="px-4 py-4 mx-4 mb-4 rounded-lg text-cyan-light resize-none"
             value={prompt6}
             onChange={(e) => setPrompt6(e.target.value)}

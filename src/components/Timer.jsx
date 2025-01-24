@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStopwatch,
@@ -9,8 +9,8 @@ import {
 
 import "../pages/JournalThoughts.css";
 
-export const Timer = () => {
-  const [clicked, setClicked] = useState(false);
+export const Timer = ({bottom, left, buttonDown=false}) => {
+  const [clicked, setClicked] = useState(buttonDown);
 
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [isRunning, setIsRunning] = useState(false);
@@ -107,7 +107,7 @@ export const Timer = () => {
   return (
     <div
       onClick={(e) => e.preventDefault()}
-      className="absolute bottom-4 left-2 btn cursor-pointer h-8 bg-cyan-light text-white flex items-center"
+      className={`absolute bottom-${bottom} left-${left} btn cursor-pointer h-8 bg-cyan-light text-white flex items-center`}
     >
       <div className="inline-flex h-full">
         <FontAwesomeIcon

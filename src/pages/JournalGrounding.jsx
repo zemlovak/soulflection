@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { supabase } from "../Supabase/supabaseClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faHeart } from "@fortawesome/free-solid-svg-icons";
-
-import "./JournalThoughts.css";
+import { faEye, faLungs, faTree } from "@fortawesome/free-solid-svg-icons";
 
 const promptList = [
-  "What have I learned about myself today or this week?",
-  "In which area of my life do I feel I've grown the most recently, and what sparked that growth?",
-  "What recurring thought, behavior, or situation keeps showing up for me, and what might it be teaching me?",
-  "When did I last feel proud? When did I feel disappointed? What can I learn from these moments?",
-  "Where in my life do I need to show myself more acceptance, and where do I feel motivated to make a change?",
-  "Looking ahead, what is one goal or quality I want to focus on developing, and why does it matter to me?",
+  "List what you can see, hear, feel, smell, and taste right now. How does this focus on your senses help you feel more grounded?",
+  "Starting at your head and moving down to your toes, note any sensations (tightness, warmth, tingling) and how they shift as you focus on them.",
+  "Pause and take five slow, deep breaths. Describe how your breath feels entering and leaving your body, and any change in your mindset afterward.",
+  "Imagine or recall a peaceful natural setting. Describe its colors, sounds, and atmosphere. How does picturing this environment affect your mood?",
+  "Visualize a place (real or imagined) where you feel completely safe. What elements make you feel protected or at ease in this place?",
+  "What single action can you focus on right now (e.g., sipping tea, stretching) to fully immerse yourself in the present?",
 ];
 
-export const JournalSelfReflection = () => {
+export const JournalGrounding = () => {
   const [prompt1, setPrompt1] = useState("");
   const [prompt2, setPrompt2] = useState("");
   const [prompt3, setPrompt3] = useState("");
@@ -58,7 +56,7 @@ export const JournalSelfReflection = () => {
     setLoading(true);
 
     const { data, error } = await supabase.from("journal_entries").insert({
-      title: "Self-reflection",
+      title: "Grounding",
       content: mergedEntries,
       created_at: new Date().toISOString(),
     });
@@ -73,24 +71,28 @@ export const JournalSelfReflection = () => {
       resetEntries();
     }
   };
-
   return (
     <>
-      <h2 className="my-4 text-white">Time to self-reflect ...</h2>
+      <h2 className="my-4 text-white">Embrace the present ...</h2>
       <form className="text-white" onSubmit={handleSaveEntry}>
         <p className="w-3/5 text-wrap">
-          Here are some journaling prompts to help you gain insights about your
-          personal experiences, behaviors, and beliefs.
+          Anchor yourself in the present moment to cultivate calmness and reduce
+          anxiety. Use these exercises to enhance your mindfulness and
+          awareness.
         </p>
         <ul className="text-xs list-decimal mt-2 mb-4 leading-5">
           <li>
-            <FontAwesomeIcon icon={faBookOpen} className="mr-2" />
-            Read each prompt and allow yourself a few moments to think before
-            writing.
+            <FontAwesomeIcon icon={faLungs} className="mr-2" />
+            Begin with a few deep breaths to center your focus.
           </li>
           <li>
-            <FontAwesomeIcon icon={faHeart} className="mr-2" />
-            Aim for honest introspection—this is a conversation with yourself.
+            <FontAwesomeIcon icon={faTree} className="mr-2" />
+            Visualize a peaceful natural setting to soothe your mind.
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faEye} className="mr-2" />
+            Engage your senses by observing what you can see, hear, feel, smell,
+            and taste.
           </li>
         </ul>
         <div className="grid gap-2 lg:grid-cols-2 sm:grid-cols-1">
@@ -162,18 +164,14 @@ export const JournalSelfReflection = () => {
           ></textarea>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <button
-            type="reset"
-            className="mr-2 text-white text-sm font-medium"
-            onClick={resetEntries}
-          >
+          <button type="reset" className="mr-2 text-white text-sm font-medium">
             Discard
           </button>
           <button
             type="submit"
             className={`btn text-white bg-cyan-light ${loading} ? "animate-pulse"`}
           >
-            {loading ? "Saving..." : "Save"}
+            {loading ? "Saving ..." : "Save"}
           </button>
         </div>
       </form>
@@ -181,4 +179,4 @@ export const JournalSelfReflection = () => {
   );
 };
 
-export default JournalSelfReflection;
+export default JournalGrounding;

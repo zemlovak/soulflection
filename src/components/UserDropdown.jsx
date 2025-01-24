@@ -28,7 +28,7 @@ export const UserDropdown = () => {
 
       {isOpen && (
         <div
-          className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5"
+          className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5 z-10"
           onMouseLeave={() => setIsOpen(false)}
         >
           <div className="py-1">

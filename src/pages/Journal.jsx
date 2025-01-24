@@ -1,8 +1,7 @@
-import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export const JournalPage = () => {
-  const location = useLocation();
   const { userUrl } = useAuth();
 
   return (
