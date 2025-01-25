@@ -45,14 +45,26 @@ export const MeditationTile = () => {
     return streak;
   };
 
+  const streak = calculateStreak();
+  let streakMessage;
+  if (streak === 0) {
+    streakMessage = `You haven't meditated yet. Start today for a fresh beginning!`;
+  } else if (streak < 7) {
+    streakMessage = "Great start—keep going!";
+  } else if (streak < 30) {
+    streakMessage = "You're building a solid habit. Fantastic consistency!";
+  } else {
+    streakMessage = "You're unstoppable! Keep up the amazing practice.";
+  }
+
   return (
     <div className="flex flex-col justify-between items-center bg-cyan-ultradark bg-opacity-50 rounded-xl px-4 py-4 sm:py-8">
       <p>You're on a</p>
-      <p className="text-bold text-4xl mx-4">
-        <strong>{calculateStreak()} day</strong>
+      <p className="text-bold text-4xl mx-2">
+        <strong>{streak} day</strong>
       </p>
       <p>meditation streak</p>
-      <p className="text-xl">Keep it up!</p>
+      <p className="text-sm text-center">{streakMessage}</p>
     </div>
   );
 };
