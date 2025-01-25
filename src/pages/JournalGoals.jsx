@@ -52,7 +52,14 @@ export const JournalGoals = () => {
       prompt6,
     ].join("\n");
 
-    if (!prompt1.trim() && !prompt2.trim() && !prompt3.trim() && !prompt4.trim() && !prompt5.trim() && !prompt6.trim()) {
+    if (
+      !prompt1.trim() &&
+      !prompt2.trim() &&
+      !prompt3.trim() &&
+      !prompt4.trim() &&
+      !prompt5.trim() &&
+      !prompt6.trim()
+    ) {
       alert("Please write something before saving.");
       return;
     }
