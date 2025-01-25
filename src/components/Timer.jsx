@@ -9,7 +9,7 @@ import {
 
 import "../pages/JournalThoughts.css";
 
-export const Timer = ({bottom, left, buttonDown=false}) => {
+export const Timer = ({buttonDown=false}) => {
   const [clicked, setClicked] = useState(buttonDown);
 
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -107,7 +107,7 @@ export const Timer = ({bottom, left, buttonDown=false}) => {
   return (
     <div
       onClick={(e) => e.preventDefault()}
-      className={`absolute bottom-${bottom} left-${left} btn cursor-pointer h-8 bg-cyan-light text-white flex items-center`}
+      className={`absolute bottom-4 left-3 btn cursor-pointer h-8 bg-cyan-light text-white flex items-center`}
     >
       <div className="inline-flex h-full">
         <FontAwesomeIcon

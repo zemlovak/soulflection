@@ -33,6 +33,7 @@ import { AuthProvider } from "./context/AuthContext";
 import LogOutSuccess from "./pages/AuthPages/LogOutSuccess";
 import SettingsPage from "./pages/AuthPages/SettingsPage";
 import AuthRoutePage from "./pages/AuthPages/AuthRoutePage";
+import MeditationExercises from "./pages/MeditationExercises";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -48,7 +49,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/logout" element={<LogOutSuccess />} />
           </Route>
 
-          <Route element={<AuthRoutePage/>}>
+          <Route element={<AuthRoutePage />}>
             <Route path="/:userId" element={<MainLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="/:userId/settings" element={<SettingsPage />} />
@@ -67,9 +68,10 @@ createRoot(document.getElementById("root")).render(
                 <Route path="grounding" element={<JournalGrounding />} />
               </Route>
               <Route path="/:userId/meditation" element={<MeditationPage />}>
-                <Route index element={<MeditationTimer/>} />
-                <Route path="sounds" element={<MeditationSounds/>} />
-                <Route path="guided" element={<MeditationGuided/>} />
+                <Route index element={<MeditationTimer />} />
+                <Route path="sounds" element={<MeditationSounds />} />
+                <Route path="guided" element={<MeditationGuided />} />
+                <Route path="exercises" element={<MeditationExercises />} />
               </Route>
               <Route path="breathwork" element={<BreathworkPage />} />
               <Route path="yoga" element={<YogaPage />} />
