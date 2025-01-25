@@ -4,23 +4,82 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const audioURLs = [
   {
-    name: "12 minute Wind Chimes",
+    name: "Wind Chimes",
     url: "https://cdn.freesound.org/previews/386/386470_6885640-lq.mp3",
+    length: 11.784,
+    description: "Relaxing Sounds of Wind Chimes",
   },
-  // ... other sounds if needed
+  {
+    name: "Healing Tone",
+    url: "https://cdn.freesound.org/previews/668/668092_13228046-lq.mp3",
+    length: 6.25,
+    description: "A single Tone for Healing",
+  },
+  {
+    name: "Rainy Spring day",
+    url: "https://cdn.freesound.org/previews/737/737740_13854978-lq.mp3",
+    length: 9.85,
+    description: "Rain with Birds chirping on a Spring Day",
+  },
+  {
+    name: "Calm Evening City",
+    url: "https://cdn.freesound.org/previews/689/689376_9034501-lq.mp3",
+    length: 11.017,
+    description: "Sounds of the Evening City from Distance",
+  },
+  {
+    name: "Woods at night",
+    url: "https://cdn.freesound.org/previews/532/532301_2669618-lq.mp3",
+    length: 3.45,
+    description: "Sounds of the Forest at Night",
+  },
+  {
+    name: "Summer Night in Georgia",
+    url: "https://cdn.freesound.org/previews/645/645706_13222620-lq.mp3",
+    length: 8.8,
+    description: "Cricket Sounds on a Summer Night",
+  },
+  {
+    name: "Tibetan Singing Bowls",
+    url: "https://cdn.freesound.org/previews/206/206031_3597112-lq.mp3",
+    length: 9.34,
+    description: "The Healing Power of Tibetan Singing Bowls",
+  },
 ];
 
 export const MeditationSounds = () => {
-  // 1) Create an audioRef to store the Audio object
   const audioRef = useRef(null);
 
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  /**
-   * Format a time value (in seconds) to mm:ss string
-   */
+  useEffect(() => {
+    audioRef.current = new Audio();
+
+    const audio = audioRef.current;
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.pause();
+      audio.src = "";
+    };
+  }, []);
+
   const formatTime = (time) => {
     if (isNaN(time)) return "00:00";
     const minutes = Math.floor(time / 60);
@@ -32,102 +91,125 @@ export const MeditationSounds = () => {
     return `${minutesStr}:${secondsStr}`;
   };
 
-  /**
-   * Set up event listeners for loadedmetadata and timeupdate
-   * so we can keep track of the audio’s duration and current time.
-   */
-  useEffect(() => {
-    audioRef.current = new Audio(audioURLs[0].url);
+  const handlePlay = (trackIndex) => {
+    const audio = audioRef.current;
 
-    const handleLoadedMetadata = () => {
-      setDuration(audioRef.current.duration);
-    };
+    if (currentTrackIndex !== null && currentTrackIndex !== trackIndex) {
+      handleStop();
+    }
 
-    const handleTimeUpdate = () => {
-      setCurrentTime(audioRef.current.currentTime);
-    };
+    if (currentTrackIndex !== trackIndex) {
+      audio.src = audioURLs[trackIndex].url;
+      setCurrentTime(0);
+      setDuration(0);
+      setCurrentTrackIndex(trackIndex);
+    }
 
-    audioRef.current.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-
-    // Cleanup event listeners when component unmounts
-    return () => {
-        audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetadata);
-        audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-    };
-  }, []);
-
-  /**
-   * PLAY, PAUSE, STOP (STOP = pause + reset to 0)
-   */
-  const handlePlay = () => {
-    audioRef.current.play();
-    setIsPlaying(true);
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+      })
+      .catch((err) => {
+        console.log("Error playing audio:", err);
+      });
   };
 
   const handlePause = () => {
-    audioRef.current.pause();
-    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
   };
 
   const handleStop = () => {
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0; // reset audio
-    setCurrentTime(0);
-    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+      setCurrentTime(0);
+    }
   };
 
   return (
     <ul className="text-white font-light">
-      <li className="py-4 flex flex-row justify-start items-baseline">
-        {/* Button Group */}
-        <div className="mr-6  h-8  rounded-full px-3 py-1 bg-cyan-light text-center align-middle">
-          <button onClick={handlePlay}>
-            <FontAwesomeIcon icon={faPlay} className="text-white text-base" />
-          </button>
+      {audioURLs.map((track, index) => {
+        const isCurrent = index === currentTrackIndex;
 
-          {(isPlaying || currentTime) > 0 && (
-            <>
-              <button className="mx-2" onClick={handlePause}>
-                <FontAwesomeIcon
-                  icon={faPause}
-                  className="text-white text-base"
-                />
-              </button>
-              <button onClick={handleStop}>
-                <FontAwesomeIcon
-                  icon={faStop}
-                  className="text-white text-base"
-                />
-              </button>
-            </>
-          )}
-        </div>
-
-        {audioURLs[0].name}
-
-        {/* Progress display (only if isPlaying OR if we've started) */}
-        {(isPlaying || currentTime > 0) && (
-          <div className="ml-4 bg-cyan-light rounded-full px-6 py-1 flex items-center">
-            <span>{formatTime(currentTime)}</span>
-            <hr className="inline-block w-[60px] mx-2" />
-            <span>{formatTime(duration - currentTime)}</span>
-
-            {/* If you'd like a progress bar: */}
+        return (
+          <li
+            key={track.url}
+            className="py-4 w-full grid lg:grid-cols-12 lg:grid-rows-1 sm:grid-cols-1 sm:grid-rows-3 items-baseline"
+          >
             <div
-              className="ml-4 w-36 h-2 bg-gray-300 rounded-full overflow-hidden"
-              style={{ position: "relative" }}
+              className={`lg:mr-6 h-8 rounded-full px-3 py-1 bg-cyan-light text-center align-middle
+                transition-all duration-700 ease-in-out
+                ${
+                  isCurrent && (isPlaying || currentTime > 0)
+                    ? "lg:col-span-2 sm:col-span-1"
+                    : "col-span-1"
+                }`}
             >
-              <div
-                className="bg-blue-500 h-2"
-                style={{
-                  width: duration ? `${(currentTime / duration) * 100}%` : "0%",
-                }}
-              />
+              {(!isCurrent || !isPlaying) && (
+                <button onClick={() => handlePlay(index)}>
+                  <FontAwesomeIcon
+                    icon={faPlay}
+                    className="text-white text-base"
+                  />
+                </button>
+              )}
+              {isCurrent && isPlaying && (
+                <>
+                  <button className="mx-2" onClick={handlePause}>
+                    <FontAwesomeIcon
+                      icon={faPause}
+                      className="text-white text-base"
+                    />
+                  </button>
+                  <button onClick={handleStop}>
+                    <FontAwesomeIcon
+                      icon={faStop}
+                      className="text-white text-base"
+                    />
+                  </button>
+                </>
+              )}
             </div>
-          </div>
-        )}
-      </li>
+
+            <div className="lg:col-span-5 sm:col-span-1">
+              <p className="font-semibold text-lg">{track.name}</p>
+              <p className="text-sm">
+                <span className="italic mr-2">
+                  ({formatTime(track.length * 60)})
+                </span>
+                {track.description}
+              </p>
+            </div>
+
+            {isCurrent && (isPlaying || currentTime > 0) && (
+              <div className="lg:ml-4 sm:mt-4 lg:col-span-5 sm:col-span-1 bg-white bg-opacity-15 rounded-full px-6 py-1 align-middle text-center">
+                <span>{formatTime(currentTime)}</span>
+                <div
+                  className="ml-4 w-36 h-2 bg-cyan-ultradark rounded-full overflow-hidden inline-block"
+                  style={{ position: "relative" }}
+                >
+                  <div
+                    className="bg-white h-2"
+                    style={{
+                      width: duration
+                        ? `${(currentTime / duration) * 100}%`
+                        : "0%",
+                    }}
+                  />
+                </div>
+                <span className="ml-4">
+                  - {formatTime(duration - currentTime)}
+                </span>
+              </div>
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 };
