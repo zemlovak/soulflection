@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../Supabase/supabaseClient";
@@ -8,12 +8,8 @@ export const MeditationPage = () => {
   const [meditatedMinutes, setMeditatedMinutes] = useState(0);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    console.log(meditatedMinutes);
-  }, [meditatedMinutes]);
-
   const handleSubmitLog = async() => {
-    const {data: submitData, error: submitError} = await supabase
+    const { error: submitError } = await supabase
     .from("meditation-logs")
     .insert({
       minutes: meditatedMinutes,

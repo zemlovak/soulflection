@@ -24,16 +24,19 @@ import MeditationPage from "./pages/Meditation";
 import MeditationTimer from "./pages/MeditationTimer";
 import MeditationSounds from "./pages/MeditationSounds";
 import MeditationGuided from "./pages/MeditationGuided";
+import MeditationExercises from "./pages/MeditationExercises";
 
 import BreathworkPage from "./pages/Breathwork";
+
 import YogaPage from "./pages/Yoga";
+import YogaAsanas from "./pages/YogaAsanas";
+import YogaFlows from "./pages/YogaFlows";
 
 import CenteredLayout from "./pages/Layout/CenteredLayout";
 import { AuthProvider } from "./context/AuthContext";
 import LogOutSuccess from "./pages/AuthPages/LogOutSuccess";
 import SettingsPage from "./pages/AuthPages/SettingsPage";
 import AuthRoutePage from "./pages/AuthPages/AuthRoutePage";
-import MeditationExercises from "./pages/MeditationExercises";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -74,7 +77,10 @@ createRoot(document.getElementById("root")).render(
                 <Route path="exercises" element={<MeditationExercises />} />
               </Route>
               <Route path="breathwork" element={<BreathworkPage />} />
-              <Route path="yoga" element={<YogaPage />} />
+              <Route path="yoga" element={<YogaPage />}>
+                <Route index element={<YogaAsanas />} />
+                <Route path="flows" element={<YogaFlows />} />
+              </Route>
             </Route>
           </Route>
         </Routes>
