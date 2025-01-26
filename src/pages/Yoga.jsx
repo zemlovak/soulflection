@@ -1,12 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { NavLink, Outlet } from "react-router";
 
 export const YogaPage = () => {
-    return (
-        <div className="min-w-96 px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl">
-        <h2 className="text-white">Here goes the yoga page content</h2>
-        <div className="w-full h-auto bg-cyan-dark rounded-lg px-6 py-4"></div>
+  const { userUrl } = useAuth();
+
+  return (
+    <div className="min-w-96 px-8 py-8 mb-8 sm:px-12 bg-cyan-dark bg-opacity-25 rounded-xl">
+      <div className="w-full h-8 text-sm flex flex-row justify-start items-center">
+        <NavLink
+          to="."
+          end
+          className={({ isActive }) =>
+            `min-w-max p-2 ${
+              isActive ? "font-semibold bg-cyan-light bg-opacity-95" : ""
+            } bg-cyan-dark bg-opacity-50 text-white text-sm rounded-t-lg`
+          }
+        >
+          Asanas
+        </NavLink>
+        <NavLink
+          to={`/${userUrl}/yoga/flows`}
+          className={({ isActive }) =>
+            `min-w-max p-2 ${
+              isActive ? "font-semibold bg-cyan-light bg-opacity-95" : ""
+            } bg-cyan-dark bg-opacity-50 text-white text-sm rounded-t-lg`
+          }
+        >
+          Flows
+        </NavLink>
       </div>
-    );
-}
- 
+      <div>
+        <Outlet />
+      </div>
+    </div>
+  );
+};
+
 export default YogaPage;
